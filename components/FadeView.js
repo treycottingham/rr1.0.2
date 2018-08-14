@@ -53,17 +53,11 @@ class FadeInView extends React.Component {
   }
 }
 
-// You can then use your `FadeInView` in place of a `View` in your components:
 export default class App extends React.Component {
   render() {
     return (
-      // <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
         <FadeInView >
           <FadeLogo />
-          {/* <Text style={{fontSize: 28, textAlign: 'center', margin: 10}}>Fading in</Text> */}
-          {/* <Button bordered full success onPress={() => this.logInButton}><Text>Log In</Text></Button>
-          <Button bordered full success onPress={this.signUpButton}><Text>SignUp</Text></Button>
-        </View> */}
         </FadeInView>
     )
   }

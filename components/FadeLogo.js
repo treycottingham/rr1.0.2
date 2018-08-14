@@ -1,6 +1,5 @@
 import React from 'react'
 import { StyleSheet, Image, ImageBackground } from 'react-native'
-import LoginForm from './LoginForm'
 import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text } from 'native-base';
 
 

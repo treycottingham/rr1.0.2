@@ -1,6 +1,5 @@
 import React from 'react'
 import { StyleSheet, Image, ImageBackground } from 'react-native'
-import LoginForm from './LoginForm'
 import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text } from 'native-base';
 
 
@@ -20,7 +19,7 @@ const styles = StyleSheet.create({
     image: {
       width: 100,
       height: 50,
-      position: "absolute",
+      position: 'absolute',
       bottom: 8,
       right: 8,
     },

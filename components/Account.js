@@ -11,7 +11,7 @@ import Feedback from './Feedback'
 
 const apiURL = 'https://road-rewards-1.herokuapp.com/users/'
 
-export default class GeoAndMoments extends React.Component {
+export default class Account extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -23,21 +23,19 @@ export default class GeoAndMoments extends React.Component {
       counter: 0,
       pointTotal: 0,
       isLoaded: false,
-      isShown: true, //delete this for production
+      isShown: true,
     }
   }
   componentDidMount() {
     this.fetchUserData()
   }
-  fetchUserData = (userEmail) => {
+  fetchUserData = () => {
     var user = firebase.auth().currentUser
     var name, email, photoUrl, uid, emailVerified
 
     if (user != null) {
       email = user.email
-      uid = user.uid // The user's ID, unique to the Firebase project. Do NOT use
-      // this value to authenticate with your backend server, if
-      // you have one. Use User.getToken() instead.
+      uid = user.uid
       this.getUser(email)
     }
   }
@@ -88,72 +86,40 @@ export default class GeoAndMoments extends React.Component {
       console.log('ERROR IN UPDATEPOINTS', error)
     })
   }
+  goToGen() {
+    Actions.generator()
+  }
+  redeem() {
+    Actions.redeem()
+  }
   signOut() {
     firebase.auth().signOut().then(Actions.landing())
-    // Actions.landing()
   }
   render() {
-    setTimeout(() => {
-      this.watchId = navigator.geolocation.watchPosition(
-      (position) => {
-        if(position.coords.speed >= 10) {
-          return this.setState({
-            speed: position.coords.speed,
-            isShown: true,
-            currentMoment: moment(),
-            counter: moment().diff(this.state.startingMoment, 'minutes')
-          })
-        }
-      },
-      (error) => this.setState({ error: error.message }),
-      { enableHighAccuracy: true, timeout: 21000, maximumAge: 1000, distanceFilter: 10 },
-    )
-    }, 20000) //140 is speed I could double press
     return (
       <Container>
         <Container>
-        <KeepAwake />
-        {this.state.isShown ? null : <Text style={styles.beginText}>Points will begin to generate when you are moving at least 10MPH, please remember to drive safely.</Text>}
-        {this.state.isShown && <Container style={styles.container}>
-          <Content style={styles.dashboard}>
-            {this.state.isLoaded ? <Text style={styles.bigText}>Welcome {this.state.email}</Text> : null}
-            <Text
-            style={styles.bigText}
-            >Points Earned This Session</Text>
-            <ImageBackground
-            style={styles.background}
-            source={require('../odometer.jpg')}
-            >
-              <Text
-              style={styles.text}
-              >{this.state.counter}</Text>
-            </ImageBackground>
-            <Text
-            style={styles.bigText}
-            >Total Points Earned</Text>
-            <ImageBackground
-            style={styles.background}
-            source={require('../odometer.jpg')}
-            >
-            {this.state.isLoaded ? <Text style={styles.pointTotal}>{this.state.storedPoints}</Text> : <Text style={styles.pointTotal}>Loading...</Text>}
-            </ImageBackground>
-            <Container style={{backgroundColor : 'green', height : '20%'}}>
-              <Button bordered light
-                onPress={this.logPoints}
-                style={{marginLeft: 50, marginTop: 10}}>
-                  <Text>Add Points to Total</Text>
-              </Button>
-              <Button bordered light
-                onPress={this.signOut}
-                style={{marginLeft: 92, marginTop: 10}}>
-                  <Text>Log Out</Text>
-              </Button>
-            </Container>
-          </Content>
-        </Container>}
-        <Logo />
+          {this.state.isShown && <Container style={styles.container}>
+          <KeepAwake />
+            <Content style={styles.dashboard}>
+              {this.state.isLoaded ? <Text style={styles.bigText}>Welcome {this.state.email}, You currenly have {this.state.storedPoints} points.</Text> : null}
+              <Container style={{backgroundColor : 'green', height : '20%'}}>
+                <Button bordered light
+                  onPress={this.redeem}
+                  style={{marginLeft: 92, marginTop: 10}}>
+                    <Text>Redeem Points</Text>
+                </Button>
+                <Button bordered light
+                  onPress={this.goToGen}
+                  style={{marginLeft: 108, marginTop: 10}}>
+                    <Text>Earn Points</Text>
+                </Button>
+              </Container>
+            </Content>
+          </Container>}
+          <Logo />
+          <Feedback />
         </Container>
-        <Feedback />
       </Container>
     )
   }

@@ -2,14 +2,30 @@ import React from 'react'
 import { StyleSheet, Image, ImageBackground } from 'react-native'
 import { Container, Form, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text, Input } from 'native-base'
 import { Actions, ActionConst } from 'react-native-router-flux'
+import * as firebase from 'firebase'
 
 import FadeView from './FadeView'
 import Feedback from './Feedback'
-import LoginForm from './LoginForm'
-import SignUp from './SignUp'
-import Logo from './Logo'
 
 export default class Landing extends React.Component {
+  // constructor(props) {
+  //   super(props)
+  // }
+  // componentDidMount() {
+  //   this.fetchUserData()
+  // }
+  // fetchUserData = () => {
+  //   console.log('FETCHUSERDATA')
+  //   var user = firebase.auth().currentUser
+  //   var name, email, photoUrl, uid, emailVerified
+  //   if (user != null) {
+  //     this.alreadyLoggedIn()
+  //   }
+  // }
+  // alreadyLoggedIn = () => {
+  //   console.log('ALREADYLOGGEDIN')
+  //   Actions.dash()
+  // } 
   logInButton = () => {
     Actions.login()
   }
@@ -40,10 +56,8 @@ const styles = StyleSheet.create({
   },
   background: {
     flex: 1,
-    // alignItems: 'flex-end',
     width: '100%',
     height: '100%',
-    // marginLeft: 65,
   },
   bigText: {
     marginTop: 6,
@@ -60,7 +74,7 @@ const styles = StyleSheet.create({
   image: {
     width: 100,
     height: 50,
-    position: "absolute",
+    position: 'absolute',
     bottom: 8,
     right: 8,
   },

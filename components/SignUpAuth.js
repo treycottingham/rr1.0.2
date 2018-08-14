@@ -37,7 +37,6 @@ export default class SignUpAuth extends React.Component {
   createUser = (data) => {
     let infoLog = {
       email: data.email,
-      // password: data.password,
       pointTotal: data.pointTotal
     }
     fetch(apiURL, {
@@ -70,16 +69,13 @@ export default class SignUpAuth extends React.Component {
         this.goToDash()
       })
   }
-  // feedback = () => {
-
-  // }
   goToDash = () => {
     Actions.dash()
   }  
   render() {
     return (
       <Container>
-        <Header />
+        {/* <Header /> */}
         <Content>
           <Form>
             <Item floatingLabel>
@@ -110,11 +106,6 @@ export default class SignUpAuth extends React.Component {
             onPress={() => this.logIn(this.state.email, this.state.password)}>
               <Text>Log In</Text>
             </Button>}
-            {/* <Button success 
-            style={styles.button}>
-            onPress={() => this.feedback()}
-              <Text>Submit Feedback</Text>
-            </Button> */}
           </Form>
         </Content>
         <Feedback />
@@ -157,7 +148,7 @@ const styles = StyleSheet.create({
   image: {
     width: 100,
     height: 50,
-    position: "absolute",
+    position: 'absolute',
     bottom: 8,
     right: 8,
   },

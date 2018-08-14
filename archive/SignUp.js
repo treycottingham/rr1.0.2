@@ -13,7 +13,6 @@ export default class SignUp extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      // id: null,
       pointTotal: 3,
       email: '1@13.com',
       password: 'pppppppp',
