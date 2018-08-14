@@ -3,7 +3,7 @@
     "name": "Road Rewards Alpha",
     "icon": "./resize0813.png",
     "sdkVersion": "27.0.0",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "ios": {
       "bundleIdentifier": "com.roadrewards.roadrewardsalpha"
     },
