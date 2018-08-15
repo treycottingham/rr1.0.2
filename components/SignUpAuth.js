@@ -14,8 +14,8 @@ export default class SignUpAuth extends React.Component {
     super(props)
     this.state = {
       pointTotal: 0,
-      email: '',
-      password: '',
+      email: 'test@0.com',
+      password: 'pppppppp',
       passwordConfirm: ''
     }
   }
@@ -57,18 +57,17 @@ export default class SignUpAuth extends React.Component {
   }
   logIn = (email, password) => {
     firebase.auth().signInWithEmailAndPassword(email, password)
-      .then(() => this.getUser(email))
+      // .then(() => this.getUser(email))
+      .then(() => {this.goToDash()})
   }
-  getUser = (email) => {
-    fetch(apiURL)
-      .then(response => response.json())
-      .then(data => data.users.filter(
-        user => user.email === email
-      ))
-      .then(() => {
-        this.goToDash()
-      })
-  }
+  // getUser = (email) => {
+  //   fetch(apiURL)
+  //     .then(response => response.json())
+  //     .then(data => data.users.filter(
+  //       user => user.email === email
+  //     ))
+  //     .then(() => {this.goToDash()})
+  // }
   goToDash = () => {
     Actions.dash()
   }  

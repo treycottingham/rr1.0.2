@@ -1,8 +1,9 @@
 import React from 'react'
-import { StyleSheet, View, ImageBackground, Image, TouchableHighlight } from 'react-native'
+import { StyleSheet, View, Easing, ImageBackground, Image, TouchableHighlight, ScrollView } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 import { KeepAwake } from 'expo'
 import moment from 'moment'
+// import Prompt from 'react-native-prompt'
 import { Container, Header, Title, Input, Content, Form, Item, Label, Footer, FooterTab, Button, Left, Right, Body, Icon, Text } from 'native-base'
 import * as firebase from 'firebase'
 
@@ -90,8 +91,9 @@ export default class Redeem extends React.Component {
     Actions.generator()
   }
   redeemOne = () => {
-    this.setState({rewardOneShown: true})
-    this.removePoints()
+    this.setState({promptVisible: true})
+    // this.setState({rewardOneShown: true})
+    // this.removePoints()
   }
   redeemTwo = () => {
     this.setState({rewardTwoShown: true})
@@ -99,14 +101,25 @@ export default class Redeem extends React.Component {
   }
   render() {
     return (
-      <Container>
         <Container>
           {this.state.isShown && <Container style={styles.container}>
           <KeepAwake />
-            <Content style={styles.dashboard}>
               {this.state.isLoaded ? <Text style={styles.bigText}>{this.state.storedPoints} points.</Text> : null}
-              <Container style={{backgroundColor : 'green', height : '20%'}}>
+              <ScrollView style={{backgroundColor : 'green', marginBottom: 60}}>
                 <Text style={styles.bigText}>Free Burrito: 5 points</Text>
+                {/* <Prompt
+                  title='"Say something"'
+                  placeholder='"Start typing"'
+                  defaultValue='"Hello"'
+                  visible={ this.state.promptVisible }
+                  onCancel={ () => this.setState({
+                    promptVisible: false,
+                    message: '"You cancelled"'
+                  }) }
+                  onSubmit={ (value) => this.setState({
+                    promptVisible: false,
+                    message: `You said "${value}"`
+                }) }/> */}
                 {this.state.rewardOneShown ? <Image source={require('../barcode.jpg')} style={styles.image}></Image> : <Button bordered light
                   onPress={this.redeemOne}
                   style={{marginLeft: 62, marginTop: 10}}>
@@ -118,13 +131,11 @@ export default class Redeem extends React.Component {
                   style={{marginLeft: 62, marginTop: 10}}>
                     <Text>Redeem Points</Text>
                 </Button>}
-              </Container>
-            </Content>
-          </Container>}
+              </ScrollView>
           <Logo />
           <Feedback />
+          </Container>}
         </Container>
-      </Container>
     )
   }
 }
