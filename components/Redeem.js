@@ -2,7 +2,6 @@ import React from 'react'
 import { StyleSheet, Image, ScrollView, Alert } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 import { KeepAwake } from 'expo'
-import moment from 'moment'
 import { Container, Button, Text } from 'native-base'
 import * as firebase from 'firebase'
 

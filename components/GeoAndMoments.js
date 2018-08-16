@@ -23,7 +23,7 @@ export default class GeoAndMoments extends React.Component {
       counter: 0,
       pointTotal: 0,
       isLoaded: false,
-      isShown: true, //delete this for production
+      // isShown: true, //delete this for production
     }
   }
   componentDidMount() {
