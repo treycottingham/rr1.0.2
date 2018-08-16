@@ -1,7 +1,7 @@
 import React from 'react'
-import { StyleSheet, View, TouchableHighlight } from 'react-native'
-import { Actions, ActionConst } from 'react-native-router-flux'
-import { Container, Header, Title, Item, Content, Label, Input, Form, Footer, FooterTab, Button, Left, Right, Body, Icon, Text } from 'native-base'
+import { StyleSheet } from 'react-native'
+import { Actions } from 'react-native-router-flux'
+import { Container, Item, Content, Label, Input, Form, Button, Text } from 'native-base'
 import * as firebase from 'firebase'
 
 import Logo from './Logo'
@@ -13,9 +13,9 @@ export default class SignUpAuth extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      pointTotal: 50,
-      email: 't@1.com',
-      password: 'pppppppp',
+      pointTotal: 0,
+      email: '',
+      password: '',
       passwordConfirm: ''
     }
   }
@@ -30,9 +30,7 @@ export default class SignUpAuth extends React.Component {
       }
       firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(() => this.createUser(this.state))
-    } catch (error) {
-      console.log(error.toString())
-    }
+    } catch (error) {console.log(error.toString())}
   }
   createUser = (data) => {
     let infoLog = {
@@ -51,13 +49,11 @@ export default class SignUpAuth extends React.Component {
     .then(() => {
       this.goToDash()
     })
-    .catch(function (error) {
-      console.log('ERROR IN CREATEUSER', error)
-    })
+    .catch(function (error) {console.log('ERROR IN CREATEUSER', error)})
   }
   logIn = (email, password) => {
     firebase.auth().signInWithEmailAndPassword(email, password)
-      .then(() => {this.goToDash()})
+    .then(() => {this.goToDash()})
   }
   goToDash = () => {
     Actions.dash()
@@ -98,7 +94,7 @@ export default class SignUpAuth extends React.Component {
           </Form>
         </Content>
         <Feedback />
-          <Logo />
+        <Logo />
       </Container>
     )
   }
@@ -108,37 +104,5 @@ const styles = StyleSheet.create({
   button: {
     marginTop: 6,
     marginLeft: 16,
-  },
-  page: {
-    flex: 1,
-    position: 'absolute',
-    bottom: 400,  //this is how to align vertically
-  },
-  signupButton: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: '25%',
-    marginLeft: '25%',
-    marginTop: '1%',
-    backgroundColor:'blue',
-    borderRadius: 5,
-    borderWidth: 0,
-    borderColor: '#fff',
-    width: '50%',
-    height: '30%',
-  },
-  input: {
-    color: 'blue',
-  },
-  buttonText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  image: {
-    width: 100,
-    height: 50,
-    position: 'absolute',
-    bottom: 8,
-    right: 8,
   },
 })

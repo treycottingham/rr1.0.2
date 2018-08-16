@@ -1,7 +1,6 @@
 import React from 'react'
-import { Animated, View } from 'react-native'
-import { Container, Form, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text } from 'native-base'
-import { Actions, ActionConst } from 'react-native-router-flux'
+import { Animated } from 'react-native'
+import { Actions } from 'react-native-router-flux'
 
 import FadeLogo from './FadeLogo'
 

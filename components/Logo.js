@@ -1,8 +1,5 @@
 import React from 'react'
-import { StyleSheet, Image, ImageBackground } from 'react-native'
-import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text } from 'native-base';
-
-
+import { StyleSheet, Image } from 'react-native'
 
 export default class Logo extends React.Component {
   render() {

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Header, Title, Item, Content, Label, Input, Form, Footer, FooterTab, Button, Left, Right, Body, Icon, Text } from 'native-base'
+import { Container, Text } from 'native-base'
 import * as firebase from 'firebase'
 
 import FadeView from './FadeView'

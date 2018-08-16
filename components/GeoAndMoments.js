@@ -1,9 +1,9 @@
 import React from 'react'
-import { StyleSheet, View, ImageBackground, TouchableHighlight } from 'react-native'
+import { StyleSheet, ImageBackground } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 import { KeepAwake } from 'expo'
 import moment from 'moment'
-import { Container, Header, Title, Input, Content, Form, Item, Label, Footer, FooterTab, Button, Left, Right, Body, Icon, Text } from 'native-base'
+import { Container, Content, Button, Text } from 'native-base'
 import * as firebase from 'firebase'
 
 import Logo from './Logo'
@@ -23,7 +23,7 @@ export default class GeoAndMoments extends React.Component {
       counter: 0,
       pointTotal: 0,
       isLoaded: false,
-      // isShown: true, //delete this for production
+      isShown: true, //delete this for production
     }
   }
   componentDidMount() {
@@ -31,29 +31,22 @@ export default class GeoAndMoments extends React.Component {
   }
   fetchUserData = (userEmail) => {
     var user = firebase.auth().currentUser
-    var name, email, photoUrl, uid, emailVerified
-
+    var email
     if (user != null) {
       email = user.email
-      // uid = user.uid // The user's ID, unique to the Firebase project. Do NOT use
-      // this value to authenticate with your backend server, if
-      // you have one. Use User.getToken() instead.
       this.getUser(email)
     }
   }
   getUser = (email) => {
-    // console.log('GETUSER EMAIL', email)
     fetch(apiURL)
       .then(response => response.json())
       .then(data => data.users.filter(
         user => user.email === email
       ))
       .then(user => {
-        console.log(user[0])
         var pointImport = user[0].pointTotal
         var userID = user[0].id
         var userEmail = user[0].email
-        // console.log('USER IN GETUSER', user)
         this.setState({
           email: userEmail,
           storedPoints: pointImport,
@@ -84,9 +77,7 @@ export default class GeoAndMoments extends React.Component {
       }
     })
     .then(res => res.json())
-    .catch(function (error) {
-      console.log('ERROR IN UPDATEPOINTS', error)
-    })
+    .catch(function (error) {console.log('ERROR IN UPDATEPOINTS', error)})
   }
   signOut() {
     firebase.auth().signOut().then(Actions.landing())
@@ -107,7 +98,7 @@ export default class GeoAndMoments extends React.Component {
       (error) => this.setState({ error: error.message }),
       { enableHighAccuracy: true, timeout: 21000, maximumAge: 1000, distanceFilter: 10 },
     )
-    }, 20000) //140 is speed I could double press
+    }, 20000)
     return (
       <Container>
         <Container>
@@ -137,14 +128,16 @@ export default class GeoAndMoments extends React.Component {
             {this.state.isLoaded ? <Text style={styles.pointTotal}>{this.state.storedPoints}</Text> : <Text style={styles.pointTotal}>Loading...</Text>}
             </ImageBackground>
             <Container style={{backgroundColor : 'green', height : '20%'}}>
-              <Button bordered light
+              <Button bordered light full
                 onPress={this.logPoints}
-                style={{marginLeft: 50, marginTop: 10}}>
+                style={styles.button}
+                >
                   <Text>Add Points to Total</Text>
               </Button>
-              <Button bordered light
+              <Button bordered light full
                 onPress={this.signOut}
-                style={{marginLeft: 92, marginTop: 10}}>
+                style={styles.button}
+                >
                   <Text>Log Out</Text>
               </Button>
             </Container>
@@ -175,19 +168,9 @@ const styles = StyleSheet.create({
     fontFamily: 'TrebuchetMS',
     color: 'black',
   },
-  dashboard: {
-    marginTop: '10%',
-  },
   pointTotal: {
     color: 'white',
     letterSpacing: 18,
-  },
-  image: {
-    width: 100,
-    height: 50,
-    position: 'absolute',
-    bottom: 8,
-    right: 8,
   },
   background: {
     flex: 1,
@@ -206,4 +189,7 @@ const styles = StyleSheet.create({
     color: 'white',
     letterSpacing: 18,
   },
+  button: {
+    marginTop: 10,
+  }
 })

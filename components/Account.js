@@ -1,9 +1,8 @@
 import React from 'react'
-import { StyleSheet, View, ImageBackground, TouchableHighlight } from 'react-native'
+import { StyleSheet } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 import { KeepAwake } from 'expo'
-import moment from 'moment'
-import { Container, Header, Title, Input, Content, Form, Item, Label, Footer, FooterTab, Button, Left, Right, Body, Icon, Text } from 'native-base'
+import { Container, Content, Button, Text } from 'native-base'
 import * as firebase from 'firebase'
 
 import Logo from './Logo'
@@ -15,12 +14,8 @@ export default class Account extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      id: null,
       email: '',
-      startingMoment: moment(),
-      currentMoment: 0,
       storedPoints: 0,
-      counter: 0,
       pointTotal: 0,
       isLoaded: false,
     }
@@ -31,7 +26,6 @@ export default class Account extends React.Component {
   fetchUserData = () => {
     var user = firebase.auth().currentUser
     var name, email, photoUrl, uid, emailVerified
-
     if (user != null) {
       email = user.email
       uid = user.uid
@@ -39,7 +33,6 @@ export default class Account extends React.Component {
     }
   }
   getUser = (email) => {
-    // console.log('GETUSER EMAIL', email)
     fetch(apiURL)
       .then(response => response.json())
       .then(data => data.users.filter(
@@ -50,7 +43,6 @@ export default class Account extends React.Component {
         var pointImport = user[0].pointTotal
         var userID = user[0].id
         var userEmail = user[0].email
-        // console.log('USER IN GETUSER', user)
         this.setState({
           email: userEmail,
           storedPoints: pointImport,
@@ -59,69 +51,36 @@ export default class Account extends React.Component {
       })
     })
   }
-  logPoints = () => {
-    var storedPoints = this.state.storedPoints + this.state.counter
-    this.setState({
-      storedPoints: storedPoints,
-      startingMoment: moment(),
-      counter: 0
-    })
-    this.updatePoints(storedPoints)
-  }
-  updatePoints = (data) => {
-    let pointsPosted = {
-      pointTotal: data
-    }
-    fetch(apiURL + this.state.id, {
-      method: 'PUT',
-      body: JSON.stringify(pointsPosted),
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      }
-    })
-    .then(res => res.json())
-    .catch(function (error) {
-      console.log('ERROR IN UPDATEPOINTS', error)
-    })
-  }
   goToGen() {
     Actions.generator()
   }
   redeem() {
     Actions.redeem()
   }
-  signOut() {
-    firebase.auth().signOut().then(Actions.landing())
-  }
   render() {
     return (
-      //<Container>
-        //<Container>
+      <Container style={styles.container}>
+        <KeepAwake />
+        <Content style={styles.dashboard}>
+          {this.state.isLoaded ? <Text style={styles.bigText}>Welcome {this.state.email}, You currenly have {this.state.storedPoints} points.</Text> : null}
           <Container style={styles.container}>
-            <KeepAwake />
-            <Content style={styles.dashboard}>
-              {this.state.isLoaded ? <Text style={styles.bigText}>Welcome {this.state.email}, You currenly have {this.state.storedPoints} points.</Text> : null}
-              <Container style={{backgroundColor : 'green', height : '20%'}}>
-                <Text style={{color: 'white', textAlign: 'center', marginTop: 10}}>Redeem points for rewards from our partner businesses.</Text>
-                <Button bordered light full
-                  onPress={this.redeem}
-                  style={{marginTop: 10}}>
-                    <Text>Redeem Points</Text>
-                </Button>
-                <Text style={{color: 'white', textAlign: 'center', marginTop: 10}}>Earn points by driving safely.</Text>
-                <Button bordered light full
-                  onPress={this.goToGen}
-                  style={{marginTop: 10}}>
-                    <Text>Earn Points</Text>
-                </Button>
-              </Container>
-            </Content>
-            <Logo />
-            <Feedback />
+            <Text style={styles.description}>Redeem points for rewards from our partner businesses.</Text>
+            <Button bordered light full
+              onPress={this.redeem}
+              style={styles.button}>
+                <Text>Redeem Points</Text>
+            </Button>
+            <Text style={styles.description}>Earn points by driving safely.</Text>
+            <Button bordered light full
+              onPress={this.goToGen}
+              style={styles.button}>
+                <Text>Earn Points</Text>
+            </Button>
           </Container>
-        //</Container>
-      //</Container>
+        </Content>
+        <Logo />
+        <Feedback />
+      </Container>
     )
   }
 }
@@ -135,43 +94,18 @@ const styles = StyleSheet.create({
     fontFamily: 'TrebuchetMS',
     color: 'white',
   },
-  beginText: {
-    marginTop: 6,
-    marginBottom: 5,
-    textAlign: 'center',
-    fontSize: 25,
-    fontFamily: 'TrebuchetMS',
-    color: 'black',
+  button: {
+    marginTop: 10
   },
   dashboard: {
     marginTop: '10%',
   },
-  pointTotal: {
-    color: 'white',
-    letterSpacing: 18,
-  },
-  image: {
-    width: 100,
-    height: 50,
-    position: 'absolute',
-    bottom: 8,
-    right: 8,
-  },
-  background: {
-    flex: 1,
-    alignItems: 'flex-end',
-    width: 150,
-    height: 25,
-    marginLeft: 65,
-  },
   container: {
     backgroundColor: 'green',
-    // flex: 1,
-    // alignItems: 'center',
-    // justifyContent: 'center',
   },
-  text: {
+  description: {
     color: 'white',
-    letterSpacing: 18,
+    textAlign: 'center',
+    marginTop: 10
   },
 })

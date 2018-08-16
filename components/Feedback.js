@@ -1,7 +1,6 @@
 import React from 'react'
-import { StyleSheet, Image, ImageBackground, Modal } from 'react-native'
-import { Container, Form, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text, View, Input } from 'native-base'
-import { Actions, ActionConst } from 'react-native-router-flux'
+import { StyleSheet, Modal } from 'react-native'
+import { Content, Button, Text, View, Input } from 'native-base'
 
 const apiURL = 'https://feedback-database-alpha.herokuapp.com/'
 
@@ -42,9 +41,9 @@ export default class Landing extends React.Component {
           onRequestClose={() => {
             alert('Modal has been closed.')
           }}>
-            <Content style={{marginTop : '70%'}}>
+            <Content style={styles.content}>
               <Text style={styles.spaced}>Feedback</Text>
-              <View style={{marginBottom : '10%'}}>
+              <View style={styles.view}>
                 <Input placeholderTextColor='white' placeholder='Tap here to enter text' style={{backgroundColor : 'gray'}} onChangeText={(text) => this.setState({text})}></Input>
               </View>
               <Button success onPress={() => this.submitFeedback(this.state.text)}>
@@ -59,35 +58,16 @@ export default class Landing extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    height: '30%',
-  },
-  background: {
-    flex: 1,
-    width: '100%',
-    height: '100%',
-  },
-  bigText: {
-    marginTop: 6,
-    marginBottom: 5,
-    textAlign: 'center',
-    fontSize: 25,
-    fontFamily: 'TrebuchetMS',
-  },
-  button: {
-    width: '100%',
+  content: {
+    marginTop: '70%',
   },
   spaced: {
     marginBottom: '3%',
     fontSize: 25,
     fontFamily: 'TrebuchetMS',
   },
-  image: {
-    width: 100,
-    height: 50,
-    position: 'absolute',
-    bottom: 8,
-    right: 8,
+  view: {
+    marginBottom: '10%',
   },
   feedbackButton: {
     position: 'absolute',
