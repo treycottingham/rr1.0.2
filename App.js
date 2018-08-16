@@ -6,6 +6,7 @@ import SignUpAuth from './components/SignUpAuth'
 import GeoAndMoments from './components/GeoAndMoments'
 import Account from './components/Account'
 import Redeem from './components/Redeem'
+import LoadIn from './components/LoadIn'
 import StayLoggedIn from './components/StayLoggedIn'
 
 
@@ -27,6 +28,7 @@ export default class App extends React.Component {
     return (
       <Router>        
         <Stack key="root">
+          <Scene key="loading" component={LoadIn} />
           <Scene key="landing" component={Landing} />
           <Scene key="login" component={SignUpAuth} />
           <Scene key="dash" component={Account} />

@@ -23,7 +23,6 @@ export default class Account extends React.Component {
       counter: 0,
       pointTotal: 0,
       isLoaded: false,
-      isShown: true,
     }
   }
   componentDidMount() {
@@ -97,30 +96,32 @@ export default class Account extends React.Component {
   }
   render() {
     return (
-      <Container>
-        <Container>
-          {this.state.isShown && <Container style={styles.container}>
-          <KeepAwake />
+      //<Container>
+        //<Container>
+          <Container style={styles.container}>
+            <KeepAwake />
             <Content style={styles.dashboard}>
               {this.state.isLoaded ? <Text style={styles.bigText}>Welcome {this.state.email}, You currenly have {this.state.storedPoints} points.</Text> : null}
               <Container style={{backgroundColor : 'green', height : '20%'}}>
-                <Button bordered light
+                <Text style={{color: 'white', textAlign: 'center', marginTop: 10}}>Redeem points for rewards from our partner businesses.</Text>
+                <Button bordered light full
                   onPress={this.redeem}
-                  style={{marginLeft: 92, marginTop: 10}}>
+                  style={{marginTop: 10}}>
                     <Text>Redeem Points</Text>
                 </Button>
-                <Button bordered light
+                <Text style={{color: 'white', textAlign: 'center', marginTop: 10}}>Earn points by driving safely.</Text>
+                <Button bordered light full
                   onPress={this.goToGen}
-                  style={{marginLeft: 108, marginTop: 10}}>
+                  style={{marginTop: 10}}>
                     <Text>Earn Points</Text>
                 </Button>
               </Container>
             </Content>
-          </Container>}
-          <Logo />
-          <Feedback />
-        </Container>
-      </Container>
+            <Logo />
+            <Feedback />
+          </Container>
+        //</Container>
+      //</Container>
     )
   }
 }
@@ -143,7 +144,7 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   dashboard: {
-    marginTop: 150,
+    marginTop: '10%',
   },
   pointTotal: {
     color: 'white',
@@ -165,9 +166,9 @@ const styles = StyleSheet.create({
   },
   container: {
     backgroundColor: 'green',
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    // flex: 1,
+    // alignItems: 'center',
+    // justifyContent: 'center',
   },
   text: {
     color: 'white',

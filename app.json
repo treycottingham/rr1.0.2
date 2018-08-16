@@ -5,7 +5,8 @@
     "sdkVersion": "27.0.0",
     "version": "1.0.3",
     "ios": {
-      "bundleIdentifier": "com.roadrewards.roadrewardsalpha"
+      "bundleIdentifier": "com.roadrewards.roadrewardsalpha",
+      "supportsTablet": true
     },
     "android": {
       "package": "com.roadrewards.roadrewardsalpha"

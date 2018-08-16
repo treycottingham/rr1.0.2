@@ -23,7 +23,7 @@ export default class GeoAndMoments extends React.Component {
       counter: 0,
       pointTotal: 0,
       isLoaded: false,
-      isShown: true, //delete this for production
+      // isShown: true, //delete this for production
     }
   }
   componentDidMount() {
@@ -35,7 +35,7 @@ export default class GeoAndMoments extends React.Component {
 
     if (user != null) {
       email = user.email
-      uid = user.uid // The user's ID, unique to the Firebase project. Do NOT use
+      // uid = user.uid // The user's ID, unique to the Firebase project. Do NOT use
       // this value to authenticate with your backend server, if
       // you have one. Use User.getToken() instead.
       this.getUser(email)
@@ -90,7 +90,6 @@ export default class GeoAndMoments extends React.Component {
   }
   signOut() {
     firebase.auth().signOut().then(Actions.landing())
-    // Actions.landing()
   }
   render() {
     setTimeout(() => {
@@ -115,7 +114,7 @@ export default class GeoAndMoments extends React.Component {
         <KeepAwake />
         {this.state.isShown ? null : <Text style={styles.beginText}>Points will begin to generate when you are moving at least 10MPH, please remember to drive safely.</Text>}
         {this.state.isShown && <Container style={styles.container}>
-          <Content style={styles.dashboard}>
+          <Content>
             {this.state.isLoaded ? <Text style={styles.bigText}>Welcome {this.state.email}</Text> : null}
             <Text
             style={styles.bigText}
@@ -177,7 +176,7 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   dashboard: {
-    marginTop: 150,
+    marginTop: '10%',
   },
   pointTotal: {
     color: 'white',

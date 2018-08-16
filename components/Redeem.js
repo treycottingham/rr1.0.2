@@ -1,9 +1,8 @@
 import React from 'react'
-import { StyleSheet, View, Easing, ImageBackground, Image, TouchableHighlight, ScrollView } from 'react-native'
+import { StyleSheet, View, Easing, ImageBackground, Image, TouchableHighlight, ScrollView, Alert } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 import { KeepAwake } from 'expo'
 import moment from 'moment'
-// import Prompt from 'react-native-prompt'
 import { Container, Header, Title, Input, Content, Form, Item, Label, Footer, FooterTab, Button, Left, Right, Body, Icon, Text } from 'native-base'
 import * as firebase from 'firebase'
 
@@ -90,10 +89,31 @@ export default class Redeem extends React.Component {
   goToGen() {
     Actions.generator()
   }
+  confirmSelectionOne = () => {
+    Alert.alert(
+      'Redeem Points?',
+      '5 points',
+      [
+        {text: 'No', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+        {text: 'Yes', onPress: () => this.redeemOne()},
+      ],
+      { cancelable: false }
+    )   
+  }
+  confirmSelectionTwo = () => {
+    Alert.alert(
+      'Redeem Points?',
+      '5 points',
+      [
+        {text: 'No', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+        {text: 'Yes', onPress: () => this.redeemTwo()},
+      ],
+      { cancelable: false }
+    )   
+  }
   redeemOne = () => {
-    this.setState({promptVisible: true})
-    // this.setState({rewardOneShown: true})
-    // this.removePoints()
+    this.removePoints()
+    this.setState({rewardOneShown: true})
   }
   redeemTwo = () => {
     this.setState({rewardTwoShown: true})
@@ -101,41 +121,26 @@ export default class Redeem extends React.Component {
   }
   render() {
     return (
-        <Container>
-          {this.state.isShown && <Container style={styles.container}>
-          <KeepAwake />
-              {this.state.isLoaded ? <Text style={styles.bigText}>{this.state.storedPoints} points.</Text> : null}
-              <ScrollView style={{backgroundColor : 'green', marginBottom: 60}}>
-                <Text style={styles.bigText}>Free Burrito: 5 points</Text>
-                {/* <Prompt
-                  title='"Say something"'
-                  placeholder='"Start typing"'
-                  defaultValue='"Hello"'
-                  visible={ this.state.promptVisible }
-                  onCancel={ () => this.setState({
-                    promptVisible: false,
-                    message: '"You cancelled"'
-                  }) }
-                  onSubmit={ (value) => this.setState({
-                    promptVisible: false,
-                    message: `You said "${value}"`
-                }) }/> */}
-                {this.state.rewardOneShown ? <Image source={require('../barcode.jpg')} style={styles.image}></Image> : <Button bordered light
-                  onPress={this.redeemOne}
-                  style={{marginLeft: 62, marginTop: 10}}>
-                    <Text>Redeem Points</Text>
-                </Button>}
-                <Text style={styles.bigText}>Gym Membership: 5 points</Text>
-                {this.state.rewardTwoShown ? <Image source={require('../barcode.jpg')} style={styles.image}></Image> : <Button bordered light
-                  onPress={this.redeemTwo}
-                  style={{marginLeft: 62, marginTop: 10}}>
-                    <Text>Redeem Points</Text>
-                </Button>}
-              </ScrollView>
-          <Logo />
-          <Feedback />
-          </Container>}
-        </Container>
+          <Container style={styles.container}>
+            <KeepAwake />
+            {this.state.isLoaded ? <Text style={styles.bigText}>You have {this.state.storedPoints} points.</Text> : null}
+            {this.state.isShown && <ScrollView style={styles.ScrollView}>
+              <Text style={{color: 'white', textAlign: 'center', marginTop: 10}}>Free burrito from Los Locos: 5 points</Text>
+              {this.state.rewardOneShown ? <Image source={require('../barcode.jpg')} style={styles.image}></Image> : <Button bordered light full
+                onPress={this.confirmSelectionOne}
+                style={{marginTop: 10}}>
+                  <Text>Redeem Points</Text>
+              </Button>}
+              <Text style={{color: 'white', textAlign: 'center', marginTop: 10}}>1 month gym membership at Skye Fitness: 5 points</Text>
+              {this.state.rewardTwoShown ? <Image source={require('../barcode.jpg')} style={styles.image}></Image> : <Button bordered light full
+                onPress={this.confirmSelectionTwo}
+                style={{marginTop: 10}}>
+                  <Text>Redeem Points</Text>
+              </Button>}
+            </ScrollView>}
+            <Logo />
+            <Feedback />
+          </Container>
     )
   }
 }
@@ -148,6 +153,10 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontFamily: 'TrebuchetMS',
     color: 'white',
+  },
+  ScrollView: {
+    backgroundColor: 'green', 
+    marginBottom: 60, 
   },
   beginText: {
     marginTop: 6,
@@ -167,6 +176,11 @@ const styles = StyleSheet.create({
   image: {
     width: 300,
     height: 200,
+    marginLeft: '9%',
+    marginTop: '3%'
+    // alignItems: 'center',
+    // justifyContent: 'center',
+    // flex: 1,
   },
   background: {
     flex: 1,
@@ -178,8 +192,8 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: 'green',
     flex: 1,
-    alignItems: 'center',
     justifyContent: 'center',
+    alignItems: 'center',
   },
   text: {
     color: 'white',
