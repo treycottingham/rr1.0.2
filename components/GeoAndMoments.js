@@ -1,6 +1,5 @@
 import React from 'react'
 import { StyleSheet, ImageBackground } from 'react-native'
-import { Actions } from 'react-native-router-flux'
 import { KeepAwake } from 'expo'
 import moment from 'moment'
 import { Container, Content, Button, Text } from 'native-base'
@@ -20,7 +19,7 @@ export default class GeoAndMoments extends React.Component {
       startingMoment: moment(),
       speed: 0,
       currentMoment: 0,
-      // storedPoints: 0,
+      storedPoints: 0,
       counter: 0,
       pointTotal: 0,
       isLoaded: false,
@@ -30,7 +29,7 @@ export default class GeoAndMoments extends React.Component {
   componentDidMount() {
     this.fetchUserData()
   }
-  fetchUserData = (userEmail) => {
+  fetchUserData = () => {
     var user = firebase.auth().currentUser
     var email
     if (user != null) {
@@ -84,7 +83,7 @@ export default class GeoAndMoments extends React.Component {
     setTimeout(() => {
       this.watchId = navigator.geolocation.watchPosition(
       (position) => {
-        if(position.coords.speed >= 0) {
+        if(position.coords.speed >= -1) {
           return this.setState({
             speed: position.coords.speed,
             isShown: true,
@@ -103,11 +102,11 @@ export default class GeoAndMoments extends React.Component {
     }, 20000)
     return (
       <Container>
-        <Container>
+        <Container style={styles.greenBack}>
         <KeepAwake />
         {this.state.isShown ? null : <Text style={styles.beginText}>Points will begin to generate when you are moving at least 10MPH, please remember to drive safely.</Text>}
         {this.state.isShown ? null : <Text style={styles.beginText}>You currently have {this.state.storedPoints} points.</Text>}
-        <Text style={styles.beginText}>Current Speed: {this.state.speed}</Text>
+        {this.state.isShown ? <Text style={styles.bigText}>Current Speed: {this.state.speed}</Text> : <Text style={styles.beginText}>Current Speed: {this.state.speed}</Text>}
         {this.state.isShown && <Container style={styles.container}>
           <Content>
             {this.state.isLoaded ? <Text style={styles.bigText}>Welcome {this.state.email}</Text> : null}
@@ -131,20 +130,12 @@ export default class GeoAndMoments extends React.Component {
             >
             {this.state.isLoaded ? <Text style={styles.pointTotal}>{this.state.storedPoints}</Text> : <Text style={styles.pointTotal}>Loading...</Text>}
             </ImageBackground>
-            <Container style={{backgroundColor : 'green', height : '20%'}}>
-              <Button bordered light full
-                onPress={this.logPoints}
-                style={styles.button}
-                >
-                  <Text>Add Points to Total</Text>
-              </Button>
-              <Button bordered light full
-                onPress={this.signOut}
-                style={styles.button}
-                >
-                  <Text>Log Out</Text>
-              </Button>
-            </Container>
+            <Button bordered light full
+              onPress={this.logPoints}
+              style={styles.button}
+              >
+                <Text>Add Points to Total</Text>
+            </Button>
           </Content>
         </Container>}
         <Logo />
@@ -163,6 +154,9 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontFamily: 'TrebuchetMS',
     color: 'white',
+  },
+  greenBack: {
+    backgroundColor: 'green',
   },
   beginText: {
     marginTop: 6,
