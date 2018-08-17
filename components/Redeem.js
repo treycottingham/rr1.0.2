@@ -116,13 +116,13 @@ export default class Redeem extends React.Component {
           {this.state.isLoaded ? <Text style={styles.bigText}>You have {this.state.storedPoints} points.</Text> : null}
           {this.state.isShown && <ScrollView style={styles.scrollView}>
             <Text style={styles.description}>Free burrito from Los Locos: 5 points</Text>
-            {this.state.rewardOneShown ? <Image source={require('../barcode.jpg')} style={styles.image}></Image> : <Button bordered light full
+            {this.state.rewardOneShown ? <Image source={require('../public/barcode.jpg')} style={styles.image}></Image> : <Button bordered light full
               onPress={this.confirmSelectionOne}
               style={styles.button}>
                 <Text>Redeem Points</Text>
             </Button>}
             <Text style={styles.description}>1 month gym membership at Skye Fitness: 5 points</Text>
-            {this.state.rewardTwoShown ? <Image source={require('../barcode.jpg')} style={styles.image}></Image> : <Button bordered light full
+            {this.state.rewardTwoShown ? <Image source={require('../public/barcode.jpg')} style={styles.image}></Image> : <Button bordered light full
               onPress={this.confirmSelectionTwo}
               style={styles.button}>
                 <Text>Redeem Points</Text>

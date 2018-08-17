@@ -25,7 +25,7 @@ export default class Account extends React.Component {
   }
   fetchUserData = () => {
     var user = firebase.auth().currentUser
-    var name, email, photoUrl, uid, emailVerified
+    var email
     if (user != null) {
       email = user.email
       uid = user.uid
@@ -39,7 +39,6 @@ export default class Account extends React.Component {
         user => user.email === email
       ))
       .then(user => {
-        console.log(user[0])
         var pointImport = user[0].pointTotal
         var userID = user[0].id
         var userEmail = user[0].email

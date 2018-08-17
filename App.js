@@ -1,13 +1,13 @@
 import React from 'react'
-import { Router, Stack, Scene, ActionConst } from 'react-native-router-flux'
+import { Router, Stack, Scene, Actions, ActionConst } from 'react-native-router-flux'
 import * as firebase from 'firebase'
 
+import LoadIn from './components/LoadIn'
 import Landing from './components/Landing'
 import SignUpAuth from './components/SignUpAuth'
-import GeoAndMoments from './components/GeoAndMoments'
 import Account from './components/Account'
+import GeoAndMoments from './components/GeoAndMoments'
 import Redeem from './components/Redeem'
-import LoadIn from './components/LoadIn'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyA2seVYrVMi-IW0MHISxmRFrdhxHHS6MH4',
@@ -20,16 +20,43 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig)
 
 export default class App extends React.Component {
+  signOut() {
+    firebase.auth().signOut().then(Actions.landing())
+  }
   render() {
     return (
       <Router>        
         <Stack key='root'>
-          <Scene key='loading' component={LoadIn} />
-          <Scene key='landing' component={Landing} />
-          <Scene key='login' component={SignUpAuth} />
-          <Scene key='dash' component={Account} />
-          <Scene key='generator' component={GeoAndMoments} />
-          <Scene key='redeem' component={Redeem} />
+          <Scene 
+            key='/' 
+            initial
+            hideNavBar={true} 
+            component={LoadIn} />
+          <Scene 
+            key='landing' 
+            hideNavBar={true} 
+            component={Landing} />
+          <Scene 
+            key='login' 
+            component={SignUpAuth} />
+          <Scene 
+            key='dash' 
+            component={Account} 
+            onRight={() => this.signOut()}
+            rightTitle = 'Sign Out'
+            />
+          <Scene 
+            key='generator'
+            component={GeoAndMoments}
+            onRight={() => this.signOut()}
+            rightTitle='Sign Out'
+            />
+          <Scene 
+            key='redeem' 
+            component={Redeem} 
+            onRight={() => this.signOut()}
+            rightTitle='Sign Out'
+            />
         </Stack>
       </Router>
     )

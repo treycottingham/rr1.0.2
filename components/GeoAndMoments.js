@@ -18,8 +18,9 @@ export default class GeoAndMoments extends React.Component {
       id: null,
       email: '',
       startingMoment: moment(),
+      speed: 0,
       currentMoment: 0,
-      storedPoints: 0,
+      // storedPoints: 0,
       counter: 0,
       pointTotal: 0,
       isLoaded: false,
@@ -79,19 +80,20 @@ export default class GeoAndMoments extends React.Component {
     .then(res => res.json())
     .catch(function (error) {console.log('ERROR IN UPDATEPOINTS', error)})
   }
-  signOut() {
-    firebase.auth().signOut().then(Actions.landing())
-  }
   render() {
     setTimeout(() => {
       this.watchId = navigator.geolocation.watchPosition(
       (position) => {
-        if(position.coords.speed >= 10) {
+        if(position.coords.speed >= 0) {
           return this.setState({
             speed: position.coords.speed,
             isShown: true,
             currentMoment: moment(),
             counter: moment().diff(this.state.startingMoment, 'minutes')
+          })
+        } else {
+          return this.setState({
+            speed: position.coords.speed,
           })
         }
       },
@@ -104,6 +106,8 @@ export default class GeoAndMoments extends React.Component {
         <Container>
         <KeepAwake />
         {this.state.isShown ? null : <Text style={styles.beginText}>Points will begin to generate when you are moving at least 10MPH, please remember to drive safely.</Text>}
+        {this.state.isShown ? null : <Text style={styles.beginText}>You currently have {this.state.storedPoints} points.</Text>}
+        <Text style={styles.beginText}>Current Speed: {this.state.speed}</Text>
         {this.state.isShown && <Container style={styles.container}>
           <Content>
             {this.state.isLoaded ? <Text style={styles.bigText}>Welcome {this.state.email}</Text> : null}
@@ -112,7 +116,7 @@ export default class GeoAndMoments extends React.Component {
             >Points Earned This Session</Text>
             <ImageBackground
             style={styles.background}
-            source={require('../odometer.jpg')}
+            source={require('../public/odometer.jpg')}
             >
               <Text
               style={styles.text}
@@ -123,7 +127,7 @@ export default class GeoAndMoments extends React.Component {
             >Total Points Earned</Text>
             <ImageBackground
             style={styles.background}
-            source={require('../odometer.jpg')}
+            source={require('../public/odometer.jpg')}
             >
             {this.state.isLoaded ? <Text style={styles.pointTotal}>{this.state.storedPoints}</Text> : <Text style={styles.pointTotal}>Loading...</Text>}
             </ImageBackground>
