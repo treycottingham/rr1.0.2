@@ -8,6 +8,7 @@ import SignUpAuth from './components/SignUpAuth'
 import Account from './components/Account'
 import GeoAndMoments from './components/GeoAndMoments'
 import Redeem from './components/Redeem'
+import Interval from './components/Interval'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyA2seVYrVMi-IW0MHISxmRFrdhxHHS6MH4',
@@ -27,6 +28,11 @@ export default class App extends React.Component {
     return (
       <Router>        
         <Stack key='root'>
+          {/* <Scene 
+            key='/' 
+            initial
+            hideNavBar={true} 
+            component={Interval} /> */}
           <Scene 
             key='/' 
             initial

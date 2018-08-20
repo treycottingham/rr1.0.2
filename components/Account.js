@@ -64,13 +64,13 @@ export default class Account extends React.Component {
           {this.state.isLoaded ? <Text style={styles.bigText}>Welcome {this.state.email}, You currenly have {this.state.storedPoints} points.</Text> : null}
           <Container style={styles.container}>
             <Text style={styles.description}>Redeem points for rewards from our partner businesses.</Text>
-            <Button bordered light full
+            <Button bordered success full
               onPress={this.redeem}
               style={styles.button}>
                 <Text>Redeem Points</Text>
             </Button>
             <Text style={styles.description}>Earn points by driving safely.</Text>
-            <Button bordered light full
+            <Button bordered success full
               onPress={this.goToGen}
               style={styles.button}>
                 <Text>Earn Points</Text>
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 25,
     fontFamily: 'TrebuchetMS',
-    color: 'white',
+    color: 'black',
   },
   button: {
     marginTop: 10
@@ -100,10 +100,10 @@ const styles = StyleSheet.create({
     marginTop: '10%',
   },
   container: {
-    backgroundColor: 'green',
+    backgroundColor: 'white',
   },
   description: {
-    color: 'white',
+    color: 'black',
     textAlign: 'center',
     marginTop: 10
   },

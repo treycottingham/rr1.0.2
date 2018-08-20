@@ -53,10 +53,19 @@ export default class Redeem extends React.Component {
       })
     })
   }
-  removePoints = () => {
+  removePointsOne = () => {
     var storedPoints = this.state.storedPoints - 5
     if(storedPoints >= 0){
       this.setState({storedPoints: storedPoints})
+      this.updatePoints(storedPoints)
+    }
+  }
+  removePointsTwo = () => {
+    var storedPoints = this.state.storedPoints - 10
+    if (storedPoints >= 0) {
+      this.setState({
+        storedPoints: storedPoints
+      })
       this.updatePoints(storedPoints)
     }
   }
@@ -75,38 +84,44 @@ export default class Redeem extends React.Component {
     .then(res => res.json())
     .catch(function (error) {console.log('ERROR IN UPDATEPOINTS', error)})
   }
-  goToGen() {
-    Actions.generator()
-  }
-  confirmSelectionOne = () => {
-    Alert.alert(
-      'Redeem Points?',
-      '5 points',
-      [
-        {text: 'No', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-        {text: 'Yes', onPress: () => this.redeemOne()},
-      ],
-      { cancelable: false }
-    )   
+  confirmSelectionOne = (event) => {
+    // console.log('EVENT', event.props)
+    if(this.state.storedPoints >= 5){
+      Alert.alert(
+        'Redeem Points?',
+        '5 points',
+        [
+          {text: 'No', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+          {text: 'Yes', onPress: () => this.redeemOne()},
+        ],
+        { cancelable: false }
+      )   
+    } else {
+      alert('You do not have enough points.')
+    }
   }
   confirmSelectionTwo = () => {
-    Alert.alert(
-      'Redeem Points?',
-      '5 points',
-      [
-        {text: 'No', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-        {text: 'Yes', onPress: () => this.redeemTwo()},
-      ],
-      { cancelable: false }
-    )   
+    if(this.state.storedPoints >= 10){
+      Alert.alert(
+        'Redeem Points?',
+        '10 points',
+        [
+          {text: 'No', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+          {text: 'Yes', onPress: () => this.redeemTwo()},
+        ],
+        { cancelable: false }
+      )   
+    } else {
+      alert('You do not have enough points.')
+    }
   }
   redeemOne = () => {
     this.setState({rewardOneShown: true})
-    this.removePoints()
+    this.removePointsOne()
   }
   redeemTwo = () => {
     this.setState({rewardTwoShown: true})
-    this.removePoints()
+    this.removePointsTwo()
   }
   render() {
     return (
@@ -115,14 +130,15 @@ export default class Redeem extends React.Component {
           <KeepAwake />
           {this.state.isLoaded ? <Text style={styles.bigText}>You have {this.state.storedPoints} points.</Text> : null}
           {this.state.isShown && <ScrollView style={styles.scrollView}>
-            <Text style={styles.description}>Free burrito from Los Locos: 5 points</Text>
-            {this.state.rewardOneShown ? <Image source={require('../public/barcode.jpg')} style={styles.image}></Image> : <Button bordered light full
+            <Text style={styles.description}>Free burrito from Los Locos Tacos: 5 points</Text>
+            {this.state.rewardOneShown ? <Image source={require('../public/barcode.jpg')} style={styles.image}></Image> : <Button bordered success full
               onPress={this.confirmSelectionOne}
+              
               style={styles.button}>
                 <Text>Redeem Points</Text>
             </Button>}
-            <Text style={styles.description}>1 month gym membership at Skye Fitness: 5 points</Text>
-            {this.state.rewardTwoShown ? <Image source={require('../public/barcode.jpg')} style={styles.image}></Image> : <Button bordered light full
+            <Text style={styles.description}>1 month gym membership at Skye Fitness: 10 points</Text>
+            {this.state.rewardTwoShown ? <Image source={require('../public/barcode.jpg')} style={styles.image}></Image> : <Button bordered success full
               onPress={this.confirmSelectionTwo}
               style={styles.button}>
                 <Text>Redeem Points</Text>
@@ -138,7 +154,7 @@ export default class Redeem extends React.Component {
 
 const styles = StyleSheet.create({
   description: {
-    color: 'white', 
+    color: 'black', 
     textAlign: 'center', 
     marginTop: 10,
   },
@@ -151,10 +167,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 25,
     fontFamily: 'TrebuchetMS',
-    color: 'white',
+    color: 'black',
   },
   scrollView: {
-    backgroundColor: 'green', 
+    backgroundColor: 'white', 
     marginBottom: 60, 
   },
   image: {
@@ -164,7 +180,7 @@ const styles = StyleSheet.create({
     marginTop: '3%'
   },
   container: {
-    backgroundColor: 'green',
+    backgroundColor: 'white',
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
