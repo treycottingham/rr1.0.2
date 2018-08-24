@@ -1,9 +1,9 @@
 import React from 'react'
 import { StyleSheet, ImageBackground } from 'react-native'
-import { KeepAwake } from 'expo'
-import moment from 'moment'
 import { Container, Content, Text } from 'native-base'
+import moment from 'moment'
 import * as firebase from 'firebase'
+import { KeepAwake } from 'expo'
 
 import Logo from './Logo'
 import Feedback from './Feedback'
@@ -13,6 +13,7 @@ const apiURL = 'https://road-rewards-1.herokuapp.com/users/'
 export default class GeoAndMoments extends React.Component {
   constructor(props) {
     super(props)
+    this.didMount = false
     this.state = {
       id: null,
       email: '',
@@ -21,17 +22,19 @@ export default class GeoAndMoments extends React.Component {
       currentMoment: 0,
       storedPoints: 0,
       counter: 0,
-      // storedAndCounter: 0,
       pointTotal: 0,
       isLoaded: false,
       isShown: false, //delete this for production
+      // storedAndCounter: 0,
     }
   }
   componentDidMount() {
     this.fetchUserData()
+    this.didMount = true
   }
   componentWillUnmount() {
     clearInterval(this.intervalId)
+    this.didMount = false
   }
   fetchUserData = () => {
     var user = firebase.auth().currentUser

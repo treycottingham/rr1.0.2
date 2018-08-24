@@ -13,7 +13,7 @@ export default class SignUpAuth extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      pointTotal: 0,
+      pointTotal: 25,
       email: '',
       password: '',
       passwordConfirm: ''

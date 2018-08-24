@@ -8,7 +8,6 @@ import SignUpAuth from './components/SignUpAuth'
 import Account from './components/Account'
 import GeoAndMoments from './components/GeoAndMoments'
 import Redeem from './components/Redeem'
-import Interval from './components/Interval'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyA2seVYrVMi-IW0MHISxmRFrdhxHHS6MH4',
@@ -28,11 +27,6 @@ export default class App extends React.Component {
     return (
       <Router>        
         <Stack key='root'>
-          {/* <Scene 
-            key='/' 
-            initial
-            hideNavBar={true} 
-            component={Interval} /> */}
           <Scene 
             key='/' 
             initial
@@ -43,23 +37,27 @@ export default class App extends React.Component {
             hideNavBar={true} 
             component={Landing} />
           <Scene 
-            key='login' 
+            key='login'
+            title='v1.0.6' 
             component={SignUpAuth} />
           <Scene 
             key='dash' 
             component={Account} 
+            title='v1.0.6'
             onRight={() => this.signOut()}
-            rightTitle = 'Sign Out'
+            rightTitle='Sign Out'
             />
           <Scene 
             key='generator'
             component={GeoAndMoments}
+            title='v1.0.6'
             onRight={() => this.signOut()}
             rightTitle='Sign Out'
             />
           <Scene 
             key='redeem' 
             component={Redeem} 
+            title='v1.0.6'
             onRight={() => this.signOut()}
             rightTitle='Sign Out'
             />

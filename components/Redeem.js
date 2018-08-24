@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Image, ScrollView, Alert } from 'react-native'
+import { StyleSheet, Image, ScrollView, Alert, View } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 import { KeepAwake } from 'expo'
 import { Container, Button, Text } from 'native-base'
@@ -130,19 +130,21 @@ export default class Redeem extends React.Component {
           <KeepAwake />
           {this.state.isLoaded ? <Text style={styles.bigText}>You have {this.state.storedPoints} points.</Text> : null}
           {this.state.isShown && <ScrollView style={styles.scrollView}>
-            <Text style={styles.description}>Free burrito from Los Locos Tacos: 5 points</Text>
-            {this.state.rewardOneShown ? <Image source={require('../public/barcode.jpg')} style={styles.image}></Image> : <Button bordered success full
+            <View style={{flex: 1, flexDirection: 'row', width: '80%'}}>
+              <Image source={require('../public/iplogo.png')} style={styles.logo}></Image>
+              <Text style={styles.description}>Illegal Petes Fountain Drink with purchase of a burrito: 5 points</Text>
+            </View>
+            {this.state.rewardOneShown ? <Image source={require('../public/qr.png')} style={styles.image}></Image> : <Button bordered success full
               onPress={this.confirmSelectionOne}
-              
               style={styles.button}>
                 <Text>Redeem Points</Text>
             </Button>}
-            <Text style={styles.description}>1 month gym membership at Skye Fitness: 10 points</Text>
+            {/* <Text style={styles.description}>1 month gym membership at Skye Fitness: 10 points</Text>
             {this.state.rewardTwoShown ? <Image source={require('../public/barcode.jpg')} style={styles.image}></Image> : <Button bordered success full
               onPress={this.confirmSelectionTwo}
               style={styles.button}>
                 <Text>Redeem Points</Text>
-            </Button>}
+            </Button>} */}
           </ScrollView>}
           <Logo />
         </Container>
@@ -157,6 +159,10 @@ const styles = StyleSheet.create({
     color: 'black', 
     textAlign: 'center', 
     marginTop: 10,
+  },
+  logo: {
+    width: 100,
+    height: 60,
   },
   button: {
     marginTop: 10,
@@ -174,9 +180,9 @@ const styles = StyleSheet.create({
     marginBottom: 60, 
   },
   image: {
-    width: 300,
+    width: 200,
     height: 200,
-    marginLeft: '9%',
+    marginLeft: '19%',
     marginTop: '3%'
   },
   container: {
