@@ -53,7 +53,15 @@ export default class SignUpAuth extends React.Component {
   }
   logIn = (email, password) => {
     firebase.auth().signInWithEmailAndPassword(email, password)
-    .then(() => {this.goToDash()})
+    .then(this.checkLoginStatus)
+  }
+  checkLoginStatus = () => {
+    var user = firebase.auth().currentUser
+    if (user != null) {
+      this.goToDash()
+    } else {
+      alert('Login Credentials are Incorrect')
+    }
   }
   goToDash = () => {
     Actions.dash()

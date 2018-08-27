@@ -16,11 +16,14 @@ export default class Account extends React.Component {
     this.state = {
       email: '',
       storedPoints: 0,
-      pointTotal: 0,
+      // pointTotal: 0,
       isLoaded: false,
     }
   }
   componentDidMount() {
+    this.fetchUserData()
+  }
+  componentDidUpdate() {
     this.fetchUserData()
   }
   fetchUserData = () => {

@@ -24,17 +24,51 @@ export default class GeoAndMoments extends React.Component {
       counter: 0,
       pointTotal: 0,
       isLoaded: false,
-      isShown: false, //delete this for production
-      // storedAndCounter: 0,
+      isShown: false,
     }
   }
   componentDidMount() {
     this.fetchUserData()
     this.didMount = true
+    if(!this.state.isShown){
+      setTimeout(() => {
+        this.watchId = navigator.geolocation.watchPosition(
+          (position) => {
+            if(position.coords.speed >= -1) {
+              this.setState({
+                speed: position.coords.speed,
+                isShown: true,
+                startingMoment: moment(),
+                counter: moment().diff(this.state.startingMoment, 'minutes')
+              })
+              this.setState({
+                storedAndCounter: moment().diff(this.state.startingMoment, 'minutes') + this.state.storedPoints,
+              })
+            } else if(position.coords.speed >= 0) {
+              this.setState({
+                speed: position.coords.speed,
+              })
+            }
+          },
+          (error) => this.setState({ error: error.message }),
+          { enableHighAccuracy: true, timeout: 21000, maximumAge: 1000, distanceFilter: 10 },
+        )
+      }, 10000)
+    }
   }
-  componentWillUnmount() {
-    clearInterval(this.intervalId)
-    this.didMount = false
+  componentDidUpdate() {
+    if(this.state.isShown) {
+      this.intervalId = setInterval(this.timer, 60000)
+    }
+  }
+  timer = () => {
+    this.setState({
+      counter: moment().diff(this.state.startingMoment, 'minutes'),
+      storedAndCounter: moment().diff(this.state.startingMoment, 'minutes') + this.state.storedPoints,
+    })
+    // if(this.state.counter >= 1) {
+      this.updatePoints() 
+    // }
   }
   fetchUserData = () => {
     var user = firebase.auth().currentUser
@@ -46,24 +80,23 @@ export default class GeoAndMoments extends React.Component {
   }
   getUser = (email) => {
     fetch(apiURL)
-      .then(response => response.json())
-      .then(data => data.users.filter(
-        user => user.email === email
-      ))
-      .then(user => {
-        var pointImport = user[0].pointTotal
-        var userID = user[0].id
-        var userEmail = user[0].email
-        this.setState({
-          email: userEmail,
-          storedPoints: pointImport,
-          isLoaded: true,
-          id: userID
+    .then(response => response.json())
+    .then(data => data.users.filter(
+      user => user.email === email
+    ))
+    .then(user => {
+      var pointImport = user[0].pointTotal
+      var userID = user[0].id
+      var userEmail = user[0].email
+      this.setState({
+        email: userEmail,
+        storedPoints: pointImport,
+        isLoaded: true,
+        id: userID
       })
     })
   }
   updatePoints = () => {
-    // console.log('UPDATE POINTS STOREDANDCOUNTER', this.state.storedAndCounter)
     let pointsPosted = {
       pointTotal: this.state.storedAndCounter
     }
@@ -78,45 +111,12 @@ export default class GeoAndMoments extends React.Component {
     .then(res => res.json())
     .catch((error) => {console.log('ERROR IN UPDATEPOINTS', error)})
   }
-  timer() {
-    this.setState({
-      counter: moment().diff(this.state.startingMoment, 'minutes'),
-      storedAndCounter: moment().diff(this.state.startingMoment, 'minutes') + this.state.storedPoints,
-    })
-    if(this.state.counter >= 1) {
-      this.updatePoints() 
-    }
+  componentWillUnmount() {
+    clearInterval(this.intervalId)
+    console.log('COMPWILLUNMOUNT')
+    this.didMount = false
   }
   render() {
-    if(!this.state.isShown){
-      setTimeout(() => {
-        this.watchId = navigator.geolocation.watchPosition(
-          (position) => {
-            if(position.coords.speed >= 10) {
-              this.setState({
-                speed: position.coords.speed,
-                isShown: true,
-                startingMoment: moment(),
-                counter: moment().diff(this.state.startingMoment, 'minutes')
-              })
-              this.setState({
-                storedAndCounter: moment().diff(this.state.startingMoment, 'minutes') + this.state.storedPoints,
-              })
-              // console.log('STOREDANDCOUNTER IN TIMEOUT', this.state.storedAndCounter)
-            } else if(position.coords.speed >= 0) {
-              this.setState({
-                speed: position.coords.speed,
-              })
-            }
-          },
-          (error) => this.setState({ error: error.message }),
-          { enableHighAccuracy: true, timeout: 21000, maximumAge: 1000, distanceFilter: 10 },
-        )
-        // console.log('TIMEOUT')
-      }, 10000)
-      this.intervalId = setInterval(this.timer.bind(this), 60000) && console.log('TIMER INIT')
-      clearTimeout()
-    }
     return (
       <Container>
         <Container style={styles.whiteBack}>
