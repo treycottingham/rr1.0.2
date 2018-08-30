@@ -78,6 +78,11 @@ export default class Account extends React.Component {
               style={styles.button}>
                 <Text>Earn Points</Text>
             </Button>
+            <Button bordered success full
+              onPress={() => Actions.test()}
+              style={styles.button}>
+                <Text>Test Login Status</Text>
+            </Button>
           </Container>
         </Content>
         <Logo />

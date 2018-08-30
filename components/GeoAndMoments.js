@@ -28,7 +28,7 @@ export default class GeoAndMoments extends React.Component {
     }
   }
   componentDidMount() {
-    this.fetchUserData()
+    // this.fetchUserData()
     this.didMount = true
     if(!this.state.isShown){
       setTimeout(() => {
@@ -39,9 +39,7 @@ export default class GeoAndMoments extends React.Component {
                 speed: position.coords.speed,
                 isShown: true,
                 startingMoment: moment(),
-                counter: moment().diff(this.state.startingMoment, 'minutes')
-              })
-              this.setState({
+                counter: moment().diff(this.state.startingMoment, 'minutes'),
                 storedAndCounter: moment().diff(this.state.startingMoment, 'minutes') + this.state.storedPoints,
               })
             } else if(position.coords.speed >= 0) {
@@ -57,6 +55,7 @@ export default class GeoAndMoments extends React.Component {
     }
   }
   componentDidUpdate() {
+    this.fetchUserData()
     if(this.state.isShown) {
       this.intervalId = setInterval(this.timer, 60000)
     }
@@ -66,9 +65,7 @@ export default class GeoAndMoments extends React.Component {
       counter: moment().diff(this.state.startingMoment, 'minutes'),
       storedAndCounter: moment().diff(this.state.startingMoment, 'minutes') + this.state.storedPoints,
     })
-    // if(this.state.counter >= 1) {
-      this.updatePoints() 
-    // }
+    this.updatePoints() 
   }
   fetchUserData = () => {
     var user = firebase.auth().currentUser
@@ -82,7 +79,7 @@ export default class GeoAndMoments extends React.Component {
     fetch(apiURL)
     .then(response => response.json())
     .then(data => data.users.filter(
-      user => user.email === email
+      user => user.email == email
     ))
     .then(user => {
       var pointImport = user[0].pointTotal

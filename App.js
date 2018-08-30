@@ -8,6 +8,7 @@ import SignUpAuth from './components/SignUpAuth'
 import Account from './components/Account'
 import GeoAndMoments from './components/GeoAndMoments'
 import Redeem from './components/Redeem'
+import Test from './components/Test'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyA2seVYrVMi-IW0MHISxmRFrdhxHHS6MH4',
@@ -57,6 +58,13 @@ export default class App extends React.Component {
           <Scene 
             key='redeem' 
             component={Redeem} 
+            title='v1.0.7'
+            onRight={() => this.signOut()}
+            rightTitle='Sign Out'
+            />
+            <Scene 
+            key='test' 
+            component={Test} 
             title='v1.0.7'
             onRight={() => this.signOut()}
             rightTitle='Sign Out'
