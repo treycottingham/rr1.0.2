@@ -39,33 +39,33 @@ export default class App extends React.Component {
             component={Landing} />
           <Scene 
             key='login'
-            title='v1.0.7' 
+            title='v1.0.8' 
             component={SignUpAuth} />
           <Scene 
             key='dash' 
             component={Account} 
-            title='v1.0.7'
+            title='v1.0.8'
             onRight={() => this.signOut()}
             rightTitle='Sign Out'
             />
           <Scene 
             key='generator'
             component={GeoAndMoments}
-            title='v1.0.7'
+            title='v1.0.8'
             onRight={() => this.signOut()}
             rightTitle='Sign Out'
             />
           <Scene 
             key='redeem' 
             component={Redeem} 
-            title='v1.0.7'
+            title='v1.0.8'
             onRight={() => this.signOut()}
             rightTitle='Sign Out'
             />
             <Scene 
             key='test' 
             component={Test} 
-            title='v1.0.7'
+            title='v1.0.8'
             onRight={() => this.signOut()}
             rightTitle='Sign Out'
             />
