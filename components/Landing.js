@@ -4,7 +4,6 @@ import { Container, Button, Text } from 'native-base'
 import { Actions } from 'react-native-router-flux'
 
 import FadeView from './FadeView'
-import Feedback from './Feedback'
 
 export default class Landing extends React.Component {
   logInButton = () => {
@@ -23,7 +22,6 @@ export default class Landing extends React.Component {
             <Button bordered full success onPress={this.signUpButton}><Text>SignUp</Text></Button>
             <Text>IMPORTANT: Due to a trademark issue, we will be changing the company name before our official launch.  In the meantime, your feedback is vitally important to improving the app.  Thank you so much to all of our Alpha testers for being part of this journey, we are very excited for the future of this venture.</Text>
           </Container>
-          <Feedback />
         </Container>
     )
   }

@@ -6,7 +6,6 @@ import * as firebase from 'firebase'
 import { KeepAwake } from 'expo'
 
 import Logo from './Logo'
-import Feedback from './Feedback'
 
 const apiURL = 'https://road-rewards-1.herokuapp.com/users/'
 
@@ -28,7 +27,7 @@ export default class GeoAndMoments extends React.Component {
     }
   }
   componentDidMount() {
-    // this.fetchUserData()
+    this.fetchUserData()
     this.didMount = true
     if(!this.state.isShown){
       setTimeout(() => {
@@ -55,7 +54,7 @@ export default class GeoAndMoments extends React.Component {
     }
   }
   componentDidUpdate() {
-    this.fetchUserData()
+    // this.fetchUserData()
     if(this.state.isShown) {
       this.intervalId = setInterval(this.timer, 60000)
     }
@@ -148,7 +147,6 @@ export default class GeoAndMoments extends React.Component {
         </Container>}
         <Logo />
         </Container>
-        <Feedback />
       </Container>
     )
   }

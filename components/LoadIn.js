@@ -19,7 +19,7 @@ export default class FadeInView extends React.Component {
     return (
         <Container style={styles.container}>
           <FadeLogo />
-          <Text>V1.0.8</Text>
+          <Text>V1.0.9</Text>
           <Button bordered success full 
           onPress={this.fetchUserData}
           ><Text>Enter</Text></Button>

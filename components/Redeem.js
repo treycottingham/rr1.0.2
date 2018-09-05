@@ -6,7 +6,6 @@ import { Container, Button, Text } from 'native-base'
 import * as firebase from 'firebase'
 
 import Logo from './Logo'
-import Feedback from './Feedback'
 
 const apiURL = 'https://road-rewards-1.herokuapp.com/users/'
 
@@ -148,7 +147,6 @@ export default class Redeem extends React.Component {
           </ScrollView>}
           <Logo />
         </Container>
-        <Feedback />
       </Container>
     )
   }

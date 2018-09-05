@@ -6,22 +6,22 @@ import { Container, Content, Button, Text } from 'native-base'
 import * as firebase from 'firebase'
 
 import Logo from './Logo'
-import Feedback from './Feedback'
 
 const apiURL = 'https://road-rewards-1.herokuapp.com/users/'
 
 export default class Account extends React.Component {
   constructor(props) {
     super(props)
+    this.didMount = false
     this.state = {
       email: '',
       storedPoints: 0,
-      // pointTotal: 0,
       isLoaded: false,
     }
   }
   componentDidMount() {
     this.fetchUserData()
+    this.didMount = true
   }
   componentDidUpdate() {
     this.fetchUserData()
@@ -59,6 +59,9 @@ export default class Account extends React.Component {
   redeem() {
     Actions.redeem()
   }
+  componentWillUnmount() {
+    this.didMount = false
+  }
   render() {
     return (
       <Container style={styles.container}>
@@ -78,15 +81,14 @@ export default class Account extends React.Component {
               style={styles.button}>
                 <Text>Earn Points</Text>
             </Button>
-            <Button bordered success full
+            {/* <Button bordered success full
               onPress={() => Actions.test()}
               style={styles.button}>
                 <Text>Test Login Status</Text>
-            </Button>
+            </Button> */}
           </Container>
         </Content>
         <Logo />
-        <Feedback />
       </Container>
     )
   }

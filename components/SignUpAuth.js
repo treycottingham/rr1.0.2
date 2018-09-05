@@ -5,7 +5,6 @@ import { Container, Item, Content, Label, Input, Form, Button, Text } from 'nati
 import * as firebase from 'firebase'
 
 import Logo from './Logo'
-import Feedback from './Feedback'
 
 const apiURL = 'https://road-rewards-1.herokuapp.com/users/'
 
@@ -101,7 +100,6 @@ export default class SignUpAuth extends React.Component {
             </Button>}
           </Form>
         </Content>
-        <Feedback />
         <Logo />
       </Container>
     )

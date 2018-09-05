@@ -6,14 +6,13 @@ import * as firebase from 'firebase'
 import { KeepAwake } from 'expo'
 
 import Logo from './Logo'
-import Feedback from './Feedback'
 
 const apiURL = 'https://road-rewards-1.herokuapp.com/users/'
 
 export default class GeoAndMoments extends React.Component {
   constructor(props) {
     super(props)
-    this.didMount = false
+    // this.didMount = false
     this.state = {
       id: null,
       email: '',
@@ -34,14 +33,11 @@ export default class GeoAndMoments extends React.Component {
     var email
     if (user != null) {
       email = user.email
-
       this.getUser(email)
-      this.setState({
-        fetchInCDM: true,
-      })
+      this.setState({fetchInCDM: true})
     }
-    this.didMount = true
-    if(!this.state.isShown){
+    // this.didMount = true
+    if(!this.state.isShown) {
       setTimeout(() => {
         this.watchId = navigator.geolocation.watchPosition(
           (position) => {
@@ -49,14 +45,12 @@ export default class GeoAndMoments extends React.Component {
               this.setState({
                 speed: position.coords.speed,
                 isShown: true,
-                startingMoment: moment(),
-                counter: moment().diff(this.state.startingMoment, 'minutes'),
-                storedAndCounter: moment().diff(this.state.startingMoment, 'minutes') + this.state.storedPoints,
+                // startingMoment: moment(),
+                // counter: moment().diff(this.state.startingMoment, 'minutes'),
+                // storedAndCounter: moment().diff(this.state.startingMoment, 'minutes') + this.state.storedPoints,
               })
             } else if(position.coords.speed >= 0) {
-              this.setState({
-                speed: position.coords.speed,
-              })
+              this.setState({speed: position.coords.speed})
             }
           },
           (error) => this.setState({ error: error.message }),
@@ -138,7 +132,7 @@ export default class GeoAndMoments extends React.Component {
   }
   componentWillUnmount() {
     clearInterval(this.intervalId)
-    this.didMount = false
+    // this.didMount = false
     console.log('COMPWILLUNMOUNT')
   }
   render() {
@@ -169,7 +163,6 @@ export default class GeoAndMoments extends React.Component {
           {this.state.isShown ? <Text style={styles.smallText}></Text> : null}
           <Logo />
         </Container>
-        <Feedback />
       </Container>
     )
   }
